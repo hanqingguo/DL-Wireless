@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Vector Source Modulation
-# Generated: Fri Oct 12 22:02:40 2018
+# Generated: Fri Oct 19 01:46:33 2018
 ##################################################
 
 if __name__ == '__main__':
@@ -26,6 +26,7 @@ from gnuradio import qtgui
 from gnuradio.eng_option import eng_option
 from gnuradio.filter import firdes
 from optparse import OptionParser
+import numpy
 import sip
 import sys
 
@@ -59,8 +60,10 @@ class vector_source_modulation(gr.top_block, Qt.QWidget):
         # Variables
         ##################################################
         self.sps = sps = 4
+        self.nfilts = nfilts = 32
         self.excess_bw = excess_bw = 0.35
         self.samp_rate = samp_rate = 32000
+        self.rrc_taps_0 = rrc_taps_0 = firdes.root_raised_cosine(nfilts, nfilts, 1.0/float(sps), 0.35, 11*sps*nfilts)
         self.rrc_taps = rrc_taps = firdes.root_raised_cosine(1, sps, 1, excess_bw, 45)
         self.qpsk = qpsk = digital.constellation_rect(([1+0j,-1+0j,0+1j,0-1j]), ([0, 1, 2, 3]), 4, 2, 2, 1, 1).base()
         self.arity = arity = 4
@@ -69,10 +72,10 @@ class vector_source_modulation(gr.top_block, Qt.QWidget):
         # Blocks
         ##################################################
         self.qtgui_time_sink_x_0 = qtgui.time_sink_c(
-        	5000, #size
+        	1000, #size
         	samp_rate, #samp_rate
         	'', #name
-        	2 #number of inputs
+        	3 #number of inputs
         )
         self.qtgui_time_sink_x_0.set_update_time(0.10)
         self.qtgui_time_sink_x_0.set_y_axis(-2, 2)
@@ -102,7 +105,7 @@ class vector_source_modulation(gr.top_block, Qt.QWidget):
         alphas = [0.5, 0.5, 0.5, 0.5, 1.0,
                   1.0, 1.0, 1.0, 1.0, 1.0]
         
-        for i in xrange(2*2):
+        for i in xrange(2*3):
             if len(labels[i]) == 0:
                 if(i % 2 == 0):
                     self.qtgui_time_sink_x_0.set_line_label(i, "Re{{Data {0}}}".format(i/2))
@@ -124,7 +127,7 @@ class vector_source_modulation(gr.top_block, Qt.QWidget):
         	0, #fc
         	samp_rate, #bw
         	'', #name
-        	2 #number of inputs
+        	3 #number of inputs
         )
         self.qtgui_freq_sink_x_0.set_update_time(0.10)
         self.qtgui_freq_sink_x_0.set_y_axis(-150, 0)
@@ -150,7 +153,7 @@ class vector_source_modulation(gr.top_block, Qt.QWidget):
                   "magenta", "yellow", "dark red", "dark green", "dark blue"]
         alphas = [0.6, 0.6, 1.0, 1.0, 1.0,
                   1.0, 1.0, 1.0, 1.0, 1.0]
-        for i in xrange(2):
+        for i in xrange(3):
             if len(labels[i]) == 0:
                 self.qtgui_freq_sink_x_0.set_line_label(i, "Data {0}".format(i))
             else:
@@ -164,7 +167,7 @@ class vector_source_modulation(gr.top_block, Qt.QWidget):
         self.qtgui_const_sink_x_0 = qtgui.const_sink_c(
         	1024*4, #size
         	'', #name
-        	2 #number of inputs
+        	3 #number of inputs
         )
         self.qtgui_const_sink_x_0.set_update_time(0.10)
         self.qtgui_const_sink_x_0.set_y_axis(-2, 2)
@@ -189,7 +192,7 @@ class vector_source_modulation(gr.top_block, Qt.QWidget):
                    0, 0, 0, 0, 0]
         alphas = [0.75, 0.5, 1.0, 1.0, 1.0,
                   1.0, 1.0, 1.0, 1.0, 1.0]
-        for i in xrange(2):
+        for i in xrange(3):
             if len(labels[i]) == 0:
                 self.qtgui_const_sink_x_0.set_line_label(i, "Data {0}".format(i))
             else:
@@ -204,6 +207,8 @@ class vector_source_modulation(gr.top_block, Qt.QWidget):
         self.top_grid_layout.addWidget(self._qtgui_const_sink_x_0_win, 0,1,1,1)
         self.fir_filter_xxx_0 = filter.fir_filter_ccc(1, (rrc_taps))
         self.fir_filter_xxx_0.declare_sample_delay(0)
+        self.digital_pfb_clock_sync_xxx_0_0 = digital.pfb_clock_sync_ccf(sps, 6.28/100.0, (rrc_taps_0), nfilts, nfilts/2, 1.5, 1)
+        self.digital_pfb_clock_sync_xxx_0 = digital.pfb_clock_sync_ccf(sps, 6.28/100.0, (rrc_taps_0), nfilts, nfilts/2, 1.5, 1)
         self.digital_constellation_modulator_0 = digital.generic_mod(
           constellation=qpsk,
           differential=False,
@@ -213,18 +218,23 @@ class vector_source_modulation(gr.top_block, Qt.QWidget):
           verbose=False,
           log=False,
           )
-        self.blocks_vector_source_x_0 = blocks.vector_source_b((57,57), True, 1, [])
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_gr_complex*1, samp_rate,True)
+        self.analog_random_source_x_0 = blocks.vector_source_b(map(int, numpy.random.randint(0, 256, 10000)), True)
 
         ##################################################
         # Connections
         ##################################################
+        self.connect((self.analog_random_source_x_0, 0), (self.digital_constellation_modulator_0, 0))    
+        self.connect((self.blocks_throttle_0, 0), (self.digital_pfb_clock_sync_xxx_0, 0))    
         self.connect((self.blocks_throttle_0, 0), (self.fir_filter_xxx_0, 0))    
-        self.connect((self.blocks_throttle_0, 0), (self.qtgui_const_sink_x_0, 0))    
-        self.connect((self.blocks_throttle_0, 0), (self.qtgui_freq_sink_x_0, 0))    
-        self.connect((self.blocks_throttle_0, 0), (self.qtgui_time_sink_x_0, 0))    
-        self.connect((self.blocks_vector_source_x_0, 0), (self.digital_constellation_modulator_0, 0))    
         self.connect((self.digital_constellation_modulator_0, 0), (self.blocks_throttle_0, 0))    
+        self.connect((self.digital_pfb_clock_sync_xxx_0, 0), (self.qtgui_const_sink_x_0, 0))    
+        self.connect((self.digital_pfb_clock_sync_xxx_0, 0), (self.qtgui_freq_sink_x_0, 0))    
+        self.connect((self.digital_pfb_clock_sync_xxx_0, 0), (self.qtgui_time_sink_x_0, 0))    
+        self.connect((self.digital_pfb_clock_sync_xxx_0_0, 0), (self.qtgui_const_sink_x_0, 2))    
+        self.connect((self.digital_pfb_clock_sync_xxx_0_0, 0), (self.qtgui_freq_sink_x_0, 2))    
+        self.connect((self.digital_pfb_clock_sync_xxx_0_0, 0), (self.qtgui_time_sink_x_0, 2))    
+        self.connect((self.fir_filter_xxx_0, 0), (self.digital_pfb_clock_sync_xxx_0_0, 0))    
         self.connect((self.fir_filter_xxx_0, 0), (self.qtgui_const_sink_x_0, 1))    
         self.connect((self.fir_filter_xxx_0, 0), (self.qtgui_freq_sink_x_0, 1))    
         self.connect((self.fir_filter_xxx_0, 0), (self.qtgui_time_sink_x_0, 1))    
@@ -239,7 +249,15 @@ class vector_source_modulation(gr.top_block, Qt.QWidget):
 
     def set_sps(self, sps):
         self.sps = sps
+        self.set_rrc_taps_0(firdes.root_raised_cosine(self.nfilts, self.nfilts, 1.0/float(self.sps), 0.35, 11*self.sps*self.nfilts))
         self.set_rrc_taps(firdes.root_raised_cosine(1, self.sps, 1, self.excess_bw, 45))
+
+    def get_nfilts(self):
+        return self.nfilts
+
+    def set_nfilts(self, nfilts):
+        self.nfilts = nfilts
+        self.set_rrc_taps_0(firdes.root_raised_cosine(self.nfilts, self.nfilts, 1.0/float(self.sps), 0.35, 11*self.sps*self.nfilts))
 
     def get_excess_bw(self):
         return self.excess_bw
@@ -256,6 +274,14 @@ class vector_source_modulation(gr.top_block, Qt.QWidget):
         self.qtgui_time_sink_x_0.set_samp_rate(self.samp_rate)
         self.qtgui_freq_sink_x_0.set_frequency_range(0, self.samp_rate)
         self.blocks_throttle_0.set_sample_rate(self.samp_rate)
+
+    def get_rrc_taps_0(self):
+        return self.rrc_taps_0
+
+    def set_rrc_taps_0(self, rrc_taps_0):
+        self.rrc_taps_0 = rrc_taps_0
+        self.digital_pfb_clock_sync_xxx_0_0.update_taps((self.rrc_taps_0))
+        self.digital_pfb_clock_sync_xxx_0.update_taps((self.rrc_taps_0))
 
     def get_rrc_taps(self):
         return self.rrc_taps
