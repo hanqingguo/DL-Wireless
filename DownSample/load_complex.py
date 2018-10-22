@@ -2,7 +2,7 @@ import scipy
 import numpy as np
 import os
 
-filename = "original"
+filename = "DownSampled"
 dir_path = os.path.dirname(os.path.realpath(__file__))
 file_path = os.path.join(dir_path, filename)
 

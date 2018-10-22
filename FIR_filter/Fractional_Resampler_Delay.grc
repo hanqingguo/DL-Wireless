@@ -341,7 +341,7 @@
     </param>
     <param>
       <key>delay</key>
-      <value>2</value>
+      <value>0</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -413,6 +413,116 @@
     <param>
       <key>id</key>
       <value>blocks_delay_0_0_0_0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>num_ports</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>float</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>1</value>
+    </param>
+  </block>
+  <block>
+    <key>blocks_delay</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>delay</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(448, 524)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>180</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>blocks_delay_0_0_0_0_0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>num_ports</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>float</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>1</value>
+    </param>
+  </block>
+  <block>
+    <key>blocks_delay</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>delay</key>
+      <value>2</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(456, 180)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>180</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>blocks_delay_0_0_0_0_1</value>
     </param>
     <param>
       <key>maxoutbuf</key>
@@ -793,6 +903,61 @@
     </param>
     <param>
       <key>_coordinate</key>
+      <value>(576, 188)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>180</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>fir_filter_xxx_0_2_0_0_0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>samp_delay</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>taps</key>
+      <value>[-1, 0, 1]</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>fff</value>
+    </param>
+  </block>
+  <block>
+    <key>fir_filter_xxx</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>decim</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
       <value>(584, 628)</value>
     </param>
     <param>
@@ -904,6 +1069,57 @@
     <param>
       <key>id</key>
       <value>fractional_resampler_xx_0_0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>phase_shift</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>resamp_ratio</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>float</value>
+    </param>
+  </block>
+  <block>
+    <key>fractional_resampler_xx</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(888, 184)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>180</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>fractional_resampler_xx_0_0_0</value>
     </param>
     <param>
       <key>maxoutbuf</key>
@@ -1191,7 +1407,7 @@
     </param>
     <param>
       <key>label2</key>
-      <value>d(sym0)/dt</value>
+      <value>d(sym0)/dt_Delay0</value>
     </param>
     <param>
       <key>marker2</key>
@@ -1215,7 +1431,7 @@
     </param>
     <param>
       <key>label3</key>
-      <value>d(sym0)/dt_Delay2</value>
+      <value>Resampler_d(sym0)/dt_Delay0</value>
     </param>
     <param>
       <key>marker3</key>
@@ -1239,7 +1455,7 @@
     </param>
     <param>
       <key>label4</key>
-      <value>d(sym0)/dt_Delay1</value>
+      <value>Resampler_d(sym0)/dt_Delay1</value>
     </param>
     <param>
       <key>marker4</key>
@@ -1263,7 +1479,7 @@
     </param>
     <param>
       <key>label5</key>
-      <value>d(sym0)/dt + phi3</value>
+      <value>Resampler_d(sym0)/dt_Delay2</value>
     </param>
     <param>
       <key>marker5</key>
@@ -1379,7 +1595,7 @@
     </param>
     <param>
       <key>nconnections</key>
-      <value>4</value>
+      <value>5</value>
     </param>
     <param>
       <key>size</key>
@@ -1457,6 +1673,18 @@
     <sink_key>3</sink_key>
   </connection>
   <connection>
+    <source_block_id>blocks_delay_0_0_0_0_0</source_block_id>
+    <sink_block_id>qtgui_time_sink_x_0_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>1</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>blocks_delay_0_0_0_0_1</source_block_id>
+    <sink_block_id>qtgui_time_sink_x_0_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>4</sink_key>
+  </connection>
+  <connection>
     <source_block_id>blocks_throttle_0</source_block_id>
     <sink_block_id>interp_fir_filter_xxx_0</sink_block_id>
     <source_key>0</source_key>
@@ -1493,10 +1721,16 @@
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>fir_filter_xxx_0_2</source_block_id>
-    <sink_block_id>qtgui_time_sink_x_0_0</sink_block_id>
+    <source_block_id>fir_filter_xxx_0</source_block_id>
+    <sink_block_id>fractional_resampler_xx_0_0_0</sink_block_id>
     <source_key>0</source_key>
-    <sink_key>1</sink_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>fir_filter_xxx_0_2</source_block_id>
+    <sink_block_id>blocks_delay_0_0_0_0_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
   </connection>
   <connection>
     <source_block_id>fir_filter_xxx_0_2_0</source_block_id>
@@ -1507,6 +1741,12 @@
   <connection>
     <source_block_id>fir_filter_xxx_0_2_0_0</source_block_id>
     <sink_block_id>blocks_delay_0_0_0_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>fir_filter_xxx_0_2_0_0_0</source_block_id>
+    <sink_block_id>blocks_delay_0_0_0_0_1</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
@@ -1525,6 +1765,12 @@
   <connection>
     <source_block_id>fractional_resampler_xx_0_0</source_block_id>
     <sink_block_id>fir_filter_xxx_0_2_0_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>fractional_resampler_xx_0_0_0</source_block_id>
+    <sink_block_id>fir_filter_xxx_0_2_0_0_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
