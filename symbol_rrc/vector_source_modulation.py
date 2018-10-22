@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Vector Source Modulation
-# Generated: Sun Oct 21 16:52:10 2018
+# Generated: Mon Oct 22 17:21:00 2018
 ##################################################
 
 if __name__ == '__main__':
@@ -131,7 +131,7 @@ class vector_source_modulation(gr.top_block, Qt.QWidget):
           verbose=False,
           log=False,
           )
-        self.blocks_vector_source_x_0 = blocks.vector_source_b((57,57,100,57,57,57), True, 1, [])
+        self.blocks_vector_source_x_0 = blocks.vector_source_b((1,2,3,4,5,6,7,8,9,10), True, 1, [])
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_gr_complex*1, samp_rate,True)
         self.blocks_float_to_complex_0 = blocks.float_to_complex(1)
         self.blocks_complex_to_float_0 = blocks.complex_to_float(1)
@@ -141,8 +141,8 @@ class vector_source_modulation(gr.top_block, Qt.QWidget):
         # Connections
         ##################################################
         self.connect((self.blocks_char_to_float_0, 0), (self.qtgui_time_sink_x_0, 0))    
-        self.connect((self.blocks_complex_to_float_0, 0), (self.blocks_float_to_complex_0, 1))    
         self.connect((self.blocks_complex_to_float_0, 1), (self.blocks_float_to_complex_0, 0))    
+        self.connect((self.blocks_complex_to_float_0, 0), (self.blocks_float_to_complex_0, 1))    
         self.connect((self.blocks_float_to_complex_0, 0), (self.tutorial_my_qpsk_demod_cb_0, 0))    
         self.connect((self.blocks_throttle_0, 0), (self.fir_filter_xxx_0, 0))    
         self.connect((self.blocks_vector_source_x_0, 0), (self.digital_constellation_modulator_0, 0))    
