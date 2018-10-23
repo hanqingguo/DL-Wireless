@@ -1737,7 +1737,7 @@
     </param>
     <param>
       <key>color5</key>
-      <value>"cyan"</value>
+      <value>"dark red"</value>
     </param>
     <param>
       <key>label5</key>
@@ -1745,7 +1745,7 @@
     </param>
     <param>
       <key>marker5</key>
-      <value>-1</value>
+      <value>0</value>
     </param>
     <param>
       <key>style5</key>
@@ -1753,7 +1753,7 @@
     </param>
     <param>
       <key>width5</key>
-      <value>1</value>
+      <value>4</value>
     </param>
     <param>
       <key>alpha6</key>

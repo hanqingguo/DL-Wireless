@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Symbol Sampling
-# Generated: Mon Oct 22 22:20:45 2018
+# Generated: Mon Oct 22 22:21:45 2018
 ##################################################
 
 if __name__ == '__main__':
@@ -71,7 +71,7 @@ class symbol_sampling(gr.top_block, Qt.QWidget):
         	27, #size
         	samp_rate, #samp_rate
         	'QT GUI Plot', #name
-        	4 #number of inputs
+        	5 #number of inputs
         )
         self.qtgui_time_sink_x_0_0.set_update_time(0.01)
         self.qtgui_time_sink_x_0_0.set_y_axis(-0.5, 1.25)
@@ -88,20 +88,20 @@ class symbol_sampling(gr.top_block, Qt.QWidget):
         if not True:
           self.qtgui_time_sink_x_0_0.disable_legend()
         
-        labels = ['Rx Symbol 1', 'Rx Symbol 2', 'Rx Symbol 3', 'Rx Symbol 4', '',
+        labels = ['Rx Symbol 1', 'Rx Symbol 2', 'Rx Symbol 3', 'Rx Symbol 4', 'Rx_sum',
                   '', '', '', '', '']
-        widths = [2, 2, 2, 2, 1,
+        widths = [2, 2, 2, 2, 4,
                   1, 1, 1, 1, 1]
-        colors = ["blue", "red", "green", "black", "cyan",
+        colors = ["blue", "red", "green", "black", "dark red",
                   "magenta", "yellow", "dark red", "dark green", "blue"]
         styles = [1, 1, 1, 1, 1,
                   1, 1, 1, 1, 1]
-        markers = [0, 0, 0, 0, -1,
+        markers = [0, 0, 0, 0, 0,
                    -1, -1, -1, -1, -1]
         alphas = [1.0, 1.0, 1.0, 1.0, 1.0,
                   1.0, 1.0, 1.0, 1.0, 1.0]
         
-        for i in xrange(4):
+        for i in xrange(5):
             if len(labels[i]) == 0:
                 self.qtgui_time_sink_x_0_0.set_line_label(i, "Data {0}".format(i))
             else:
@@ -185,10 +185,12 @@ class symbol_sampling(gr.top_block, Qt.QWidget):
         self.blocks_throttle_0_0_0 = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
         self.blocks_throttle_0_0 = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
+        self.blocks_add_xx_0 = blocks.add_vff(1)
 
         ##################################################
         # Connections
         ##################################################
+        self.connect((self.blocks_add_xx_0, 0), (self.qtgui_time_sink_x_0_0, 4))    
         self.connect((self.blocks_throttle_0, 0), (self.interp_fir_filter_xxx_0, 0))    
         self.connect((self.blocks_throttle_0_0, 0), (self.interp_fir_filter_xxx_0_0, 0))    
         self.connect((self.blocks_throttle_0_0_0, 0), (self.interp_fir_filter_xxx_0_0_0, 0))    
@@ -197,9 +199,13 @@ class symbol_sampling(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_vector_source_x_0_0, 0), (self.blocks_throttle_0_0, 0))    
         self.connect((self.blocks_vector_source_x_0_0_0, 0), (self.blocks_throttle_0_0_0, 0))    
         self.connect((self.blocks_vector_source_x_0_1, 0), (self.blocks_throttle_0_1, 0))    
+        self.connect((self.fir_filter_xxx_0, 0), (self.blocks_add_xx_0, 0))    
         self.connect((self.fir_filter_xxx_0, 0), (self.qtgui_time_sink_x_0_0, 0))    
+        self.connect((self.fir_filter_xxx_0_0, 0), (self.blocks_add_xx_0, 1))    
         self.connect((self.fir_filter_xxx_0_0, 0), (self.qtgui_time_sink_x_0_0, 1))    
+        self.connect((self.fir_filter_xxx_0_0_0, 0), (self.blocks_add_xx_0, 3))    
         self.connect((self.fir_filter_xxx_0_0_0, 0), (self.qtgui_time_sink_x_0_0, 3))    
+        self.connect((self.fir_filter_xxx_0_1, 0), (self.blocks_add_xx_0, 2))    
         self.connect((self.fir_filter_xxx_0_1, 0), (self.qtgui_time_sink_x_0_0, 2))    
         self.connect((self.interp_fir_filter_xxx_0, 0), (self.fir_filter_xxx_0, 0))    
         self.connect((self.interp_fir_filter_xxx_0, 0), (self.qtgui_time_sink_x_0, 0))    

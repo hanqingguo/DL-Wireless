@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 ##################################################
 # GNU Radio Python Flow Graph
-# Title: Vector Source Modulation
-# Generated: Mon Oct 22 22:24:50 2018
+# Title: Top Block
+# Generated: Mon Oct 22 22:27:06 2018
 ##################################################
 
 if __name__ == '__main__':
@@ -18,9 +18,8 @@ if __name__ == '__main__':
 
 from PyQt4 import Qt
 from gnuradio import blocks
-from gnuradio import digital
+from gnuradio import channels
 from gnuradio import eng_notation
-from gnuradio import filter
 from gnuradio import gr
 from gnuradio import qtgui
 from gnuradio.eng_option import eng_option
@@ -28,15 +27,14 @@ from gnuradio.filter import firdes
 from optparse import OptionParser
 import sip
 import sys
-import tutorial
 
 
-class vector_source_modulation(gr.top_block, Qt.QWidget):
+class top_block(gr.top_block, Qt.QWidget):
 
     def __init__(self):
-        gr.top_block.__init__(self, "Vector Source Modulation")
+        gr.top_block.__init__(self, "Top Block")
         Qt.QWidget.__init__(self)
-        self.setWindowTitle("Vector Source Modulation")
+        self.setWindowTitle("Top Block")
         try:
             self.setWindowIcon(Qt.QIcon.fromTheme('gnuradio-grc'))
         except:
@@ -53,30 +51,25 @@ class vector_source_modulation(gr.top_block, Qt.QWidget):
         self.top_grid_layout = Qt.QGridLayout()
         self.top_layout.addLayout(self.top_grid_layout)
 
-        self.settings = Qt.QSettings("GNU Radio", "vector_source_modulation")
+        self.settings = Qt.QSettings("GNU Radio", "top_block")
         self.restoreGeometry(self.settings.value("geometry").toByteArray())
 
         ##################################################
         # Variables
         ##################################################
-        self.sps = sps = 4
-        self.nfilts = nfilts = 32
-        self.excess_bw = excess_bw = 0.35
+        self.taps3 = taps3 = 1, 1+1j
+        self.taps2 = taps2 = 1+1j
+        self.taps1 = taps1 = 1
         self.samp_rate = samp_rate = 32000
-        self.rrc_taps_0 = rrc_taps_0 = firdes.root_raised_cosine(nfilts, nfilts, 1.0/float(sps), 0.35, 11*sps*nfilts)
-        self.rrc_taps = rrc_taps = firdes.root_raised_cosine(1,sps,1,excess_bw,45)
-        self.qpsk = qpsk = digital.constellation_rect(([1+1j,1-1j,-1+1j,-1-1j]), ([0, 1, 2, 3]), 4, 2, 2, 1, 1).base()
-        self.arity = arity = 4
 
         ##################################################
         # Blocks
         ##################################################
-        self.tutorial_my_qpsk_demod_cb_0 = tutorial.my_qpsk_demod_cb(True)
-        self.qtgui_time_sink_x_0 = qtgui.time_sink_f(
+        self.qtgui_time_sink_x_0 = qtgui.time_sink_c(
         	1024, #size
         	samp_rate, #samp_rate
         	"", #name
-        	1 #number of inputs
+        	3 #number of inputs
         )
         self.qtgui_time_sink_x_0.set_update_time(0.10)
         self.qtgui_time_sink_x_0.set_y_axis(-1, 1)
@@ -93,22 +86,25 @@ class vector_source_modulation(gr.top_block, Qt.QWidget):
         if not True:
           self.qtgui_time_sink_x_0.disable_legend()
         
-        labels = ['', '', '', '', '',
-                  '', '', '', '', '']
+        labels = ['1_Real', '1_Imag', '1+1j_Real', '1+1j_Imag', '[1,1+1j]_Real',
+                  '[1,1+1j]_Imag', '', '', '', '']
         widths = [1, 1, 1, 1, 1,
                   1, 1, 1, 1, 1]
         colors = ["blue", "red", "green", "black", "cyan",
                   "magenta", "yellow", "dark red", "dark green", "blue"]
         styles = [1, 1, 1, 1, 1,
                   1, 1, 1, 1, 1]
-        markers = [-1, -1, -1, -1, -1,
-                   -1, -1, -1, -1, -1]
+        markers = [0, 0, 0, 0, 0,
+                   0, -1, -1, -1, -1]
         alphas = [1.0, 1.0, 1.0, 1.0, 1.0,
                   1.0, 1.0, 1.0, 1.0, 1.0]
         
-        for i in xrange(1):
+        for i in xrange(2*3):
             if len(labels[i]) == 0:
-                self.qtgui_time_sink_x_0.set_line_label(i, "Data {0}".format(i))
+                if(i % 2 == 0):
+                    self.qtgui_time_sink_x_0.set_line_label(i, "Re{{Data {0}}}".format(i/2))
+                else:
+                    self.qtgui_time_sink_x_0.set_line_label(i, "Im{{Data {0}}}".format(i/2))
             else:
                 self.qtgui_time_sink_x_0.set_line_label(i, labels[i])
             self.qtgui_time_sink_x_0.set_line_width(i, widths[i])
@@ -119,64 +115,69 @@ class vector_source_modulation(gr.top_block, Qt.QWidget):
         
         self._qtgui_time_sink_x_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0.pyqwidget(), Qt.QWidget)
         self.top_layout.addWidget(self._qtgui_time_sink_x_0_win)
-        self.fractional_resampler_xx_0 = filter.fractional_resampler_cc(0, 4)
-        self.fir_filter_xxx_0 = filter.fir_filter_ccc(1, (rrc_taps))
-        self.fir_filter_xxx_0.declare_sample_delay(0)
-        self.digital_constellation_modulator_0 = digital.generic_mod(
-          constellation=qpsk,
-          differential=False,
-          samples_per_symbol=sps,
-          pre_diff_code=True,
-          excess_bw=excess_bw,
-          verbose=False,
-          log=False,
-          )
-        self.blocks_vector_source_x_0 = blocks.vector_source_b((1,2,3,4,5,6,7,8,9,10), True, 1, [])
+        self.channels_channel_model_0_0_0 = channels.channel_model(
+        	noise_voltage=0.0,
+        	frequency_offset=0.0,
+        	epsilon=1.0,
+        	taps=(taps3),
+        	noise_seed=0,
+        	block_tags=False
+        )
+        self.channels_channel_model_0_0 = channels.channel_model(
+        	noise_voltage=0.0,
+        	frequency_offset=0.0,
+        	epsilon=1.0,
+        	taps=(taps2, ),
+        	noise_seed=0,
+        	block_tags=False
+        )
+        self.channels_channel_model_0 = channels.channel_model(
+        	noise_voltage=0.0,
+        	frequency_offset=0.0,
+        	epsilon=1.0,
+        	taps=(taps1, ),
+        	noise_seed=0,
+        	block_tags=False
+        )
+        self.blocks_vector_source_x_0 = blocks.vector_source_c((1+0j, 0-1j, 0+1j, -1+0j), True, 1, [])
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_gr_complex*1, samp_rate,True)
-        self.blocks_float_to_complex_0 = blocks.float_to_complex(1)
-        self.blocks_complex_to_float_0 = blocks.complex_to_float(1)
-        self.blocks_char_to_float_0 = blocks.char_to_float(1, 1)
 
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.blocks_char_to_float_0, 0), (self.qtgui_time_sink_x_0, 0))    
-        self.connect((self.blocks_complex_to_float_0, 1), (self.blocks_float_to_complex_0, 0))    
-        self.connect((self.blocks_complex_to_float_0, 0), (self.blocks_float_to_complex_0, 1))    
-        self.connect((self.blocks_float_to_complex_0, 0), (self.tutorial_my_qpsk_demod_cb_0, 0))    
-        self.connect((self.blocks_throttle_0, 0), (self.fir_filter_xxx_0, 0))    
-        self.connect((self.blocks_vector_source_x_0, 0), (self.digital_constellation_modulator_0, 0))    
-        self.connect((self.digital_constellation_modulator_0, 0), (self.blocks_throttle_0, 0))    
-        self.connect((self.fir_filter_xxx_0, 0), (self.fractional_resampler_xx_0, 0))    
-        self.connect((self.fractional_resampler_xx_0, 0), (self.blocks_complex_to_float_0, 0))    
-        self.connect((self.tutorial_my_qpsk_demod_cb_0, 0), (self.blocks_char_to_float_0, 0))    
+        self.connect((self.blocks_throttle_0, 0), (self.channels_channel_model_0, 0))    
+        self.connect((self.blocks_throttle_0, 0), (self.channels_channel_model_0_0, 0))    
+        self.connect((self.blocks_throttle_0, 0), (self.channels_channel_model_0_0_0, 0))    
+        self.connect((self.blocks_vector_source_x_0, 0), (self.blocks_throttle_0, 0))    
+        self.connect((self.channels_channel_model_0, 0), (self.qtgui_time_sink_x_0, 0))    
+        self.connect((self.channels_channel_model_0_0, 0), (self.qtgui_time_sink_x_0, 1))    
+        self.connect((self.channels_channel_model_0_0_0, 0), (self.qtgui_time_sink_x_0, 2))    
 
     def closeEvent(self, event):
-        self.settings = Qt.QSettings("GNU Radio", "vector_source_modulation")
+        self.settings = Qt.QSettings("GNU Radio", "top_block")
         self.settings.setValue("geometry", self.saveGeometry())
         event.accept()
 
-    def get_sps(self):
-        return self.sps
+    def get_taps3(self):
+        return self.taps3
 
-    def set_sps(self, sps):
-        self.sps = sps
-        self.set_rrc_taps(firdes.root_raised_cosine(1,self.sps,1,self.excess_bw,45))
-        self.set_rrc_taps_0(firdes.root_raised_cosine(self.nfilts, self.nfilts, 1.0/float(self.sps), 0.35, 11*self.sps*self.nfilts))
+    def set_taps3(self, taps3):
+        self.taps3 = taps3
+        self.channels_channel_model_0_0_0.set_taps((self.taps3))
 
-    def get_nfilts(self):
-        return self.nfilts
+    def get_taps2(self):
+        return self.taps2
 
-    def set_nfilts(self, nfilts):
-        self.nfilts = nfilts
-        self.set_rrc_taps_0(firdes.root_raised_cosine(self.nfilts, self.nfilts, 1.0/float(self.sps), 0.35, 11*self.sps*self.nfilts))
+    def set_taps2(self, taps2):
+        self.taps2 = taps2
+        self.channels_channel_model_0_0.set_taps((self.taps2, ))
 
-    def get_excess_bw(self):
-        return self.excess_bw
+    def get_taps1(self):
+        return self.taps1
 
-    def set_excess_bw(self, excess_bw):
-        self.excess_bw = excess_bw
-        self.set_rrc_taps(firdes.root_raised_cosine(1,self.sps,1,self.excess_bw,45))
+    def set_taps1(self, taps1):
+        self.taps1 = taps1
+        self.channels_channel_model_0.set_taps((self.taps1, ))
 
     def get_samp_rate(self):
         return self.samp_rate
@@ -186,33 +187,8 @@ class vector_source_modulation(gr.top_block, Qt.QWidget):
         self.qtgui_time_sink_x_0.set_samp_rate(self.samp_rate)
         self.blocks_throttle_0.set_sample_rate(self.samp_rate)
 
-    def get_rrc_taps_0(self):
-        return self.rrc_taps_0
 
-    def set_rrc_taps_0(self, rrc_taps_0):
-        self.rrc_taps_0 = rrc_taps_0
-
-    def get_rrc_taps(self):
-        return self.rrc_taps
-
-    def set_rrc_taps(self, rrc_taps):
-        self.rrc_taps = rrc_taps
-        self.fir_filter_xxx_0.set_taps((self.rrc_taps))
-
-    def get_qpsk(self):
-        return self.qpsk
-
-    def set_qpsk(self, qpsk):
-        self.qpsk = qpsk
-
-    def get_arity(self):
-        return self.arity
-
-    def set_arity(self, arity):
-        self.arity = arity
-
-
-def main(top_block_cls=vector_source_modulation, options=None):
+def main(top_block_cls=top_block, options=None):
 
     from distutils.version import StrictVersion
     if StrictVersion(Qt.qVersion()) >= StrictVersion("4.5.0"):
