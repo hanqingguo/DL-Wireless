@@ -82,6 +82,65 @@
     </param>
   </block>
   <block>
+    <key>variable_constellation_rect</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>const_points</key>
+      <value>[1+0j, -1+0j]</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(0, 372)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>bpsk</value>
+    </param>
+    <param>
+      <key>imag_sect</key>
+      <value>2</value>
+    </param>
+    <param>
+      <key>real_sect</key>
+      <value>2</value>
+    </param>
+    <param>
+      <key>rot_sym</key>
+      <value>4</value>
+    </param>
+    <param>
+      <key>soft_dec_lut</key>
+      <value>None</value>
+    </param>
+    <param>
+      <key>precision</key>
+      <value>8</value>
+    </param>
+    <param>
+      <key>sym_map</key>
+      <value>[0, 1]</value>
+    </param>
+    <param>
+      <key>w_imag_sect</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>w_real_sect</key>
+      <value>1</value>
+    </param>
+  </block>
+  <block>
     <key>variable</key>
     <param>
       <key>comment</key>
@@ -648,7 +707,7 @@
     </param>
     <param>
       <key>vector</key>
-      <value>(1,2)</value>
+      <value>(1,2,3,4,5)</value>
     </param>
   </block>
   <block>
@@ -663,7 +722,7 @@
     </param>
     <param>
       <key>constellation</key>
-      <value>qpsk</value>
+      <value>bpsk</value>
     </param>
     <param>
       <key>affinity</key>
@@ -671,7 +730,7 @@
     </param>
     <param>
       <key>differential</key>
-      <value>False</value>
+      <value>True</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -738,7 +797,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(344, 596)</value>
+      <value>(392, 596)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -793,7 +852,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(512, 356)</value>
+      <value>(448, 356)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1688,7 +1747,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1088, 256)</value>
+      <value>(1072, 296)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -4665,7 +4724,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(328, 308)</value>
+      <value>(264, 364)</value>
     </param>
     <param>
       <key>_rotation</key>

@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Top Block
-# Generated: Mon Oct 22 18:10:53 2018
+# Generated: Tue Oct 23 17:03:59 2018
 ##################################################
 
 if __name__ == '__main__':
@@ -66,6 +66,7 @@ class top_block(gr.top_block, Qt.QWidget):
         self.samp_rate = samp_rate = 500e3
         self.rrc_taps = rrc_taps = firdes.root_raised_cosine(1, sps, 1, excess_bw, nfilts)
         self.qpsk = qpsk = digital.constellation_rect(([1+1j,1-1j,-1+1j,-1-1j]), ([0, 1, 2, 3]), 4, 2, 2, 1, 1).base()
+        self.bpsk = bpsk = digital.constellation_rect(([1+0j, -1+0j]), ([0, 1]), 4, 2, 2, 1, 1).base()
 
         ##################################################
         # Blocks
@@ -201,15 +202,15 @@ class top_block(gr.top_block, Qt.QWidget):
         self.fir_filter_xxx_0 = filter.fir_filter_ccc(1, (rrc_taps))
         self.fir_filter_xxx_0.declare_sample_delay(0)
         self.digital_constellation_modulator_0 = digital.generic_mod(
-          constellation=qpsk,
-          differential=False,
+          constellation=bpsk,
+          differential=True,
           samples_per_symbol=sps,
           pre_diff_code=True,
           excess_bw=excess_bw,
           verbose=False,
           log=False,
           )
-        self.blocks_vector_source_x_0 = blocks.vector_source_b((1,2), True, 1, [])
+        self.blocks_vector_source_x_0 = blocks.vector_source_b((1,2,3,4,5), True, 1, [])
 
         ##################################################
         # Connections
@@ -270,6 +271,12 @@ class top_block(gr.top_block, Qt.QWidget):
 
     def set_qpsk(self, qpsk):
         self.qpsk = qpsk
+
+    def get_bpsk(self):
+        return self.bpsk
+
+    def set_bpsk(self, bpsk):
+        self.bpsk = bpsk
 
 
 def main(top_block_cls=top_block, options=None):
