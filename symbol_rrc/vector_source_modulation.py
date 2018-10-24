@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Vector Source Modulation
-# Generated: Mon Oct 22 22:24:50 2018
+# Generated: Tue Oct 23 22:00:29 2018
 ##################################################
 
 if __name__ == '__main__':
@@ -28,7 +28,6 @@ from gnuradio.filter import firdes
 from optparse import OptionParser
 import sip
 import sys
-import tutorial
 
 
 class vector_source_modulation(gr.top_block, Qt.QWidget):
@@ -71,27 +70,26 @@ class vector_source_modulation(gr.top_block, Qt.QWidget):
         ##################################################
         # Blocks
         ##################################################
-        self.tutorial_my_qpsk_demod_cb_0 = tutorial.my_qpsk_demod_cb(True)
-        self.qtgui_time_sink_x_0 = qtgui.time_sink_f(
+        self.qtgui_time_sink_x_0_0 = qtgui.time_sink_c(
         	1024, #size
         	samp_rate, #samp_rate
         	"", #name
         	1 #number of inputs
         )
-        self.qtgui_time_sink_x_0.set_update_time(0.10)
-        self.qtgui_time_sink_x_0.set_y_axis(-1, 1)
+        self.qtgui_time_sink_x_0_0.set_update_time(0.10)
+        self.qtgui_time_sink_x_0_0.set_y_axis(-1, 1)
         
-        self.qtgui_time_sink_x_0.set_y_label('Amplitude', "")
+        self.qtgui_time_sink_x_0_0.set_y_label('Amplitude', "")
         
-        self.qtgui_time_sink_x_0.enable_tags(-1, True)
-        self.qtgui_time_sink_x_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, qtgui.TRIG_SLOPE_POS, 0.0, 0, 0, "")
-        self.qtgui_time_sink_x_0.enable_autoscale(False)
-        self.qtgui_time_sink_x_0.enable_grid(False)
-        self.qtgui_time_sink_x_0.enable_axis_labels(True)
-        self.qtgui_time_sink_x_0.enable_control_panel(False)
+        self.qtgui_time_sink_x_0_0.enable_tags(-1, True)
+        self.qtgui_time_sink_x_0_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, qtgui.TRIG_SLOPE_POS, 0.0, 0, 0, "")
+        self.qtgui_time_sink_x_0_0.enable_autoscale(False)
+        self.qtgui_time_sink_x_0_0.enable_grid(False)
+        self.qtgui_time_sink_x_0_0.enable_axis_labels(True)
+        self.qtgui_time_sink_x_0_0.enable_control_panel(False)
         
         if not True:
-          self.qtgui_time_sink_x_0.disable_legend()
+          self.qtgui_time_sink_x_0_0.disable_legend()
         
         labels = ['', '', '', '', '',
                   '', '', '', '', '']
@@ -106,19 +104,22 @@ class vector_source_modulation(gr.top_block, Qt.QWidget):
         alphas = [1.0, 1.0, 1.0, 1.0, 1.0,
                   1.0, 1.0, 1.0, 1.0, 1.0]
         
-        for i in xrange(1):
+        for i in xrange(2*1):
             if len(labels[i]) == 0:
-                self.qtgui_time_sink_x_0.set_line_label(i, "Data {0}".format(i))
+                if(i % 2 == 0):
+                    self.qtgui_time_sink_x_0_0.set_line_label(i, "Re{{Data {0}}}".format(i/2))
+                else:
+                    self.qtgui_time_sink_x_0_0.set_line_label(i, "Im{{Data {0}}}".format(i/2))
             else:
-                self.qtgui_time_sink_x_0.set_line_label(i, labels[i])
-            self.qtgui_time_sink_x_0.set_line_width(i, widths[i])
-            self.qtgui_time_sink_x_0.set_line_color(i, colors[i])
-            self.qtgui_time_sink_x_0.set_line_style(i, styles[i])
-            self.qtgui_time_sink_x_0.set_line_marker(i, markers[i])
-            self.qtgui_time_sink_x_0.set_line_alpha(i, alphas[i])
+                self.qtgui_time_sink_x_0_0.set_line_label(i, labels[i])
+            self.qtgui_time_sink_x_0_0.set_line_width(i, widths[i])
+            self.qtgui_time_sink_x_0_0.set_line_color(i, colors[i])
+            self.qtgui_time_sink_x_0_0.set_line_style(i, styles[i])
+            self.qtgui_time_sink_x_0_0.set_line_marker(i, markers[i])
+            self.qtgui_time_sink_x_0_0.set_line_alpha(i, alphas[i])
         
-        self._qtgui_time_sink_x_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0.pyqwidget(), Qt.QWidget)
-        self.top_layout.addWidget(self._qtgui_time_sink_x_0_win)
+        self._qtgui_time_sink_x_0_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0_0.pyqwidget(), Qt.QWidget)
+        self.top_layout.addWidget(self._qtgui_time_sink_x_0_0_win)
         self.fractional_resampler_xx_0 = filter.fractional_resampler_cc(0, 4)
         self.fir_filter_xxx_0 = filter.fir_filter_ccc(1, (rrc_taps))
         self.fir_filter_xxx_0.declare_sample_delay(0)
@@ -133,23 +134,15 @@ class vector_source_modulation(gr.top_block, Qt.QWidget):
           )
         self.blocks_vector_source_x_0 = blocks.vector_source_b((1,2,3,4,5,6,7,8,9,10), True, 1, [])
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_gr_complex*1, samp_rate,True)
-        self.blocks_float_to_complex_0 = blocks.float_to_complex(1)
-        self.blocks_complex_to_float_0 = blocks.complex_to_float(1)
-        self.blocks_char_to_float_0 = blocks.char_to_float(1, 1)
 
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.blocks_char_to_float_0, 0), (self.qtgui_time_sink_x_0, 0))    
-        self.connect((self.blocks_complex_to_float_0, 1), (self.blocks_float_to_complex_0, 0))    
-        self.connect((self.blocks_complex_to_float_0, 0), (self.blocks_float_to_complex_0, 1))    
-        self.connect((self.blocks_float_to_complex_0, 0), (self.tutorial_my_qpsk_demod_cb_0, 0))    
         self.connect((self.blocks_throttle_0, 0), (self.fir_filter_xxx_0, 0))    
         self.connect((self.blocks_vector_source_x_0, 0), (self.digital_constellation_modulator_0, 0))    
         self.connect((self.digital_constellation_modulator_0, 0), (self.blocks_throttle_0, 0))    
         self.connect((self.fir_filter_xxx_0, 0), (self.fractional_resampler_xx_0, 0))    
-        self.connect((self.fractional_resampler_xx_0, 0), (self.blocks_complex_to_float_0, 0))    
-        self.connect((self.tutorial_my_qpsk_demod_cb_0, 0), (self.blocks_char_to_float_0, 0))    
+        self.connect((self.fractional_resampler_xx_0, 0), (self.qtgui_time_sink_x_0_0, 0))    
 
     def closeEvent(self, event):
         self.settings = Qt.QSettings("GNU Radio", "vector_source_modulation")
@@ -183,7 +176,7 @@ class vector_source_modulation(gr.top_block, Qt.QWidget):
 
     def set_samp_rate(self, samp_rate):
         self.samp_rate = samp_rate
-        self.qtgui_time_sink_x_0.set_samp_rate(self.samp_rate)
+        self.qtgui_time_sink_x_0_0.set_samp_rate(self.samp_rate)
         self.blocks_throttle_0.set_sample_rate(self.samp_rate)
 
     def get_rrc_taps_0(self):

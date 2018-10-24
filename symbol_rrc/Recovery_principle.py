@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Recovery Principle
-# Generated: Mon Oct 22 22:28:38 2018
+# Generated: Wed Oct 24 00:08:28 2018
 ##################################################
 
 if __name__ == '__main__':
@@ -154,7 +154,7 @@ class Recovery_principle(gr.top_block, Qt.QWidget):
         self.fir_filter_xxx_0.declare_sample_delay(0)
         self.digital_constellation_modulator_0_0_0 = digital.generic_mod(
           constellation=qpsk,
-          differential=True,
+          differential=False,
           samples_per_symbol=sps,
           pre_diff_code=True,
           excess_bw=excess_bw,
@@ -163,7 +163,7 @@ class Recovery_principle(gr.top_block, Qt.QWidget):
           )
         self.digital_constellation_modulator_0_0 = digital.generic_mod(
           constellation=qpsk,
-          differential=True,
+          differential=False,
           samples_per_symbol=sps,
           pre_diff_code=True,
           excess_bw=excess_bw,
